@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename package &apos;so.lab4.LruApprox&apos; to &apos;so.lab4.lruApprox&apos;&#x0D;&#x0A;- Original project: &apos;So Lab 4&apos;&#x0D;&#x0A;- Original element: &apos;So Lab 4/src/so.lab4.LruApprox&apos;&#x0D;&#x0A;- Renamed element: &apos;So Lab 4/src/so.lab4.lruApprox&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;so.lab4.LruApprox&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;so.lab4.LruApprox" name="so.lab4.lruApprox" qualified="false" references="true" stamp="1430296048004" textual="false" version="1.0"/>
-</session>

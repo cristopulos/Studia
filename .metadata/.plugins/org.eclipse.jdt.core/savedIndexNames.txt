@@ -1,3 +1,0 @@
-INDEX VERSION 1.127+C:\Users\Ja\Desktop\Studia git repo\Studia\.metadata\.plugins\org.eclipse.jdt.core
-2886341639.index
-846102948.index
