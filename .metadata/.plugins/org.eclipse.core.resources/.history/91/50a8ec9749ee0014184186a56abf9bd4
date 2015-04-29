@@ -1,0 +1,23 @@
+package so.lab3.algorithms;
+
+import java.util.Collections;
+import java.util.List;
+
+import so.lab3.comparators.FrameLastReferenceComparator;
+import so.lab3.structs.Frame;
+import so.lab3.structs.Request;
+import so.lab4.lruApprox.FramesManagingAlgorithm;
+
+public class FIFOFrameManagingAlgorithm extends FramesManagingAlgorithm {
+
+	public FIFOFrameManagingAlgorithm(int pagesQuant, int framesQuant, List<Request> reqList) {
+		super(pagesQuant, framesQuant, reqList);
+	}
+
+	@Override
+	protected Frame chooseFrameToSwapPages() {
+		Collections.sort(physicMemory, new FrameLastReferenceComparator());
+		return physicMemory.get(0);
+	}
+
+}

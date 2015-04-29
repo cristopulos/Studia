@@ -1,0 +1,58 @@
+package so.lab3.algorithms;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import so.lab3.structs.Frame;
+import so.lab3.structs.Request;
+import so.lab4.lruApprox.FramesManagingAlgorithm;
+
+public class OPTFramesManagingAlgorithm extends FramesManagingAlgorithm {
+
+	public OPTFramesManagingAlgorithm(int pagesQuant, int framesQuant, List<Request> reqList) {
+		super(pagesQuant, framesQuant, reqList);
+	}
+
+	@Override
+	protected Frame chooseFrameToSwapPages() {
+		if (physicMemory.size() == 1) {
+			for (Frame f : physicMemory)
+				return f;
+		}
+
+		Map<Integer, Integer> requestPositionMap = createNearestRequestMapForPagesInMemory();
+		int id = -1;
+		for (int i : requestPositionMap.keySet()) {
+			if (requestPositionMap.get(i) == -1) {
+				id = i;
+				break;
+			}
+
+		}
+		return getFrameContainingPageWithId(id);
+	}
+
+
+	private Map<Integer, Integer> createNearestRequestMapForPagesInMemory() {
+		int counter = 0;
+		Map<Integer, Integer> out = createRawMapForProcessing();
+		for (int i = 0; (i < requestList.size()) && (counter < out.size() - 1); i++) {
+			if ((out.get(requestList.get(i)) != null)
+					&& (out.get(requestList.get(i).getPageId()) == -1)) {
+				counter++;
+				out.put(requestList.get(i).getPageId(), i);
+			}
+		}
+		return out;
+	}
+
+	private Map<Integer, Integer> createRawMapForProcessing() {
+		Map<Integer, Integer> out = new HashMap<Integer, Integer>();
+		for (Frame f : physicMemory) {
+			out.put(f.getPage().getId(), -1);
+		}
+		return out;
+	}
+
+}

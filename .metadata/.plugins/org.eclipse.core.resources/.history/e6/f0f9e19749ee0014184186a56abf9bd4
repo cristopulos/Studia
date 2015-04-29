@@ -1,0 +1,22 @@
+package so.lab3.algorithms;
+
+import java.util.List;
+import java.util.Random;
+
+import so.lab3.structs.Frame;
+import so.lab3.structs.Request;
+import so.lab4.lruApprox.FramesManagingAlgorithm;
+
+public class RANDFrameManagingAlgorithm extends FramesManagingAlgorithm {
+
+	public RANDFrameManagingAlgorithm(int pagesQuant, int framesQuant, List<Request> reqList) {
+		super(pagesQuant, framesQuant, reqList);
+	}
+
+	@Override
+	protected Frame chooseFrameToSwapPages() {
+		Random rand = new Random();
+		return physicMemory.get(rand.nextInt(physicMemory.size()));
+	}
+
+}
