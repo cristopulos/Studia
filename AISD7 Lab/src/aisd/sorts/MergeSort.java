@@ -6,9 +6,9 @@ public class MergeSort extends SortAlg {
 
 	private int number;
 
-	public void sort(int[] values) {
-		this.numbers = values;
-		number = values.length;
+	public void sort(int[] arr) {
+		this.numbers = arr;
+		number = arr.length;
 		this.helper = new int[number];
 		mergesort(0, number - 1);
 	}
