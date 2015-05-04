@@ -14,4 +14,8 @@ public class Page {
 		return id;
 	}
 
+	public static void reset() {
+		counter = 0;
+	}
+
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import so.lab3.structs.Frame;
 import so.lab3.structs.Page;
 import so.lab3.structs.Request;
-import so.lab3.structs.Timer;
 
 public abstract class FramesManagingAlgorithm {
 	protected List<Frame> physicMemory;
@@ -31,15 +30,39 @@ public abstract class FramesManagingAlgorithm {
 		pageErrors = 0;
 	}
 
+	public FramesManagingAlgorithm(List<Page> pages, List<Frame> frames) {
+		requestList = new LinkedList<Request>();
+		physicMemory = new LinkedList<Frame>(frames);
+		virtualMemory = new LinkedList<Page>(pages);
+		pageErrors = 0;
+	}
+	
+	public int getPhysicMemorySize ()
+	{
+		return physicMemory.size();
+	}
+
 	public int getPageErrors() {
 		return pageErrors;
 	}
 
-	public void processNextTimeunit() {
+	public int processRequests(List<Request> requests) {
+		pageErrors = 0;
+		for (Request r : requests) {
+			requestList.add(new Request(r));
+		}
 		while (!requestList.isEmpty()) {
 			processNextRequest();
 		}
-		Timer.incrementTime();
+		return pageErrors;
+	}
+
+	public void addFrame(Frame F) {
+		physicMemory.add(F);
+	}
+
+	public Frame removeFrame() {
+		return physicMemory.remove(0);
 	}
 
 	private void processNextRequest() {
