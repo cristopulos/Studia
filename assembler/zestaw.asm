@@ -1,5 +1,9 @@
 	.data
 yolo:	.word 20 
+one:	.word 1
+two:	.word 2
+oned: 	.double 1
+twod:	.double 2
 	.text
 	add $t1,$t2,$t3
 	addi $t1,$t2,10
@@ -68,14 +72,28 @@ lab1:	jal lab2
 	li $t3,-3 
 	div $t4,$t2,$t3
 	divu $t4,$t2,$t3
-	mult $t4,$t2,$t3
-	multu $t4,$t2,$t3
-	
-	
-	
-
-	
-	j out
+	mult  $t2,$t3
+	multu $t2,$t3
+	mfhi $t0
+	mflo $t0
+	lwc1  $f0, one
+	lwc1 $f2, two
+	add.s $f4,$f0,$f2
+	div.s $f4,$f0,$f2
+	mul.s $f4,$f0,$f2
+	sub.s $f4,$f0,$f2
+	ldc1 $f0, oned
+	ldc1 $f2 ,twod
+	add.d $f4,$f0,$f2
+	sub.d $f4,$f0,$f2
+	div.d $f4,$f0,$f2
+	mul.d $f4,$f0,$f2
+	c.eq.d $f4,$f2
+	bc1f jump
+	add $t0,$t0,10
+jump:	bc1t jump2
+	add $t0,$t0,10
+jump2:	j out
 
 out:	li   $v0, 10          # system call for exit
 	syscall
