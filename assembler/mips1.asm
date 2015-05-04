@@ -4,9 +4,9 @@ prompt: .asciiz "Wynik to : "
 exc:	.asciiz "x=1 nie nalezy do dziedziny f-cji"
 tns:	.double 297
 one:	.double 1
-	
+main:	.globl
 	.text
-	la $a0, text
+main:	la $a0, text
 	li $v0,4 		# print string
 	syscall
 	li $v0,7 		# load double f0 = x
