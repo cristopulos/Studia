@@ -32,7 +32,7 @@ public class Thread {
 		for (int i = 1; i < pagesQuant; i++) {
 			pages.add(new Page());
 		}
-		alg = new LRUApproxFrameManagingAlgorithm(pages, null);
+		alg = new LRUApproxFrameManagingAlgorithm(pages, new ArrayList<Frame>());
 		wasGenerated = false;
 	}
 
@@ -65,7 +65,7 @@ public class Thread {
 			int pageNumber;
 			do {
 				pageNumber = rand.nextInt(range) + startingPage;
-			} while (pageNumber < pagesQuant + firstPageID);
+			} while (pageNumber >= pagesQuant + firstPageID);
 			requests.add(new Request(pageNumber, Timer.currentTime()));
 		}
 		requestList = new ArrayList<Request>(requests);

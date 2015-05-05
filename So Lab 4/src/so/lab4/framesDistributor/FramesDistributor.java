@@ -19,6 +19,7 @@ public abstract class FramesDistributor {
 	List<Frame> freeFrames;
 
 	public FramesDistributor(int framesQuant, List<Thread> runningThreads) {
+		freeFrames = new ArrayList<Frame>();
 		this.framesQuant = framesQuant;
 		for (int i = 0; i < framesQuant; i++)
 			freeFrames.add(new Frame());
@@ -29,12 +30,12 @@ public abstract class FramesDistributor {
 
 	public double runSimulation(int time) throws RequestsNotGeneratedException,
 			NoFreeFramesException, NoFramesToRemoveException {
-		int counter = 0;
 		while (Timer.currentTime() <= time) {
-			if (counter % 10 == 0)
+			if (Timer.currentTime() % 10 == 0)
 				distributeFrames();
 			generateRequests();
 			processRequests();
+			Timer.incrementTime();
 		}
 		resetsStaticVars();
 		return (double) pageErrors / processedRequests;

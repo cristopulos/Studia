@@ -32,7 +32,7 @@ public abstract class FramesManagingAlgorithm {
 
 	public FramesManagingAlgorithm(List<Page> pages, List<Frame> frames) {
 		requestList = new LinkedList<Request>();
-		physicMemory = new LinkedList<Frame>(frames);
+		physicMemory = frames;
 		virtualMemory = new LinkedList<Page>(pages);
 		pageErrors = 0;
 	}
@@ -93,7 +93,7 @@ public abstract class FramesManagingAlgorithm {
 
 	private boolean isInMemmory(int id) {
 		for (Frame f : physicMemory) {
-			if (f.getPage().getId() == id)
+			if (f.getPage()!= null && f.getPage().getId() == id)
 				return true;
 		}
 		return false;
