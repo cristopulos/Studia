@@ -12,7 +12,7 @@ import so.lab4.exceptions.RequestsNotGeneratedException;
 import so.lab4.framesDistributor.EqualFramesDistributor;
 import so.lab4.framesDistributor.ProportionalFrameDistributor;
 
-public class EqualDistributorTests {
+public class DistributorTests {
 
 	ArrayList<Thread> threadList;
 	@Before
