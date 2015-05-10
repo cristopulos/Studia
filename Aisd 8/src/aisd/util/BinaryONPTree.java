@@ -55,6 +55,11 @@ public class BinaryONPTree {
 		return topEl.inorder();
 	}
 	
+	public String bfs()
+	{
+		return topEl.bfs();
+	}
+	
 	public String postorder () throws InvalidCharacterExcpection
 	{
 		StringBuffer sb = new StringBuffer(topEl.postorder());

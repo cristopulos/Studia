@@ -15,15 +15,16 @@ public class Main {
 		PrintStream ps = new PrintStream(System.out);
 		ps.printf("Podaj wyrazenie do obliczenia%n");
 		String statement = in.nextLine();
-		BinaryONPTree ONPTree = BinaryONPTree.createTree(statement);
+		BinaryONPTree oNPTree = BinaryONPTree.createTree(statement);
 		double result = 0;
-		result = ONPTree.calculate();
+		result = oNPTree.calculate();
 		ps.printf("Wynik to : %.2f%n", result);
-		ps.printf("inorder : %s%n", ONPTree.inorder());
-		ps.printf("postorder : %s%n", ONPTree.postorder());
-		ps.printf("ilosc lisci : %d%n", ONPTree.lefasQuant());
-		ps.printf("wysokosc drzewa : %d%n", ONPTree.height());
-		ps.printf("ilosc wezlow : %d%n", ONPTree.nodesQuant());
+		ps.printf("inorder : %s%n", oNPTree.inorder());
+		ps.printf("postorder : %s%n", oNPTree.postorder());
+		ps.printf("ilosc lisci : %d%n", oNPTree.lefasQuant());
+		ps.printf("wysokosc drzewa : %d%n", oNPTree.height());
+		ps.printf("ilosc wezlow : %d%n", oNPTree.nodesQuant());
+		ps.printf("drzewo bfs : %s", oNPTree.bfs());
 		in.close();
 		ps.close();
 	}

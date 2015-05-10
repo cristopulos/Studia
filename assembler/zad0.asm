@@ -1,11 +1,20 @@
+#Krzysztof Heldt
+#Zad 0
+	
 	.data
 yolo:	.word 20 
 one:	.word 1
 two:	.word 2
 oned: 	.double 1
 twod:	.double 2
+onef:	.float 1.5
+twof:	.float 2.4
+oneh:	.half 12
+space:	.space 32
+ext: 	.extern yolo 4
+	.globl main
 	.text
-	add $t1,$t2,$t3
+main:	add $t1,$t2,$t3
 	addi $t1,$t2,10
 	addiu $t1,$t2,100
 	addu $t2,$t1,$t3
@@ -59,7 +68,7 @@ lab1:	jal lab2
 	la $t4,yolo
 	lb $t3,0($t4)
 	lbu $t3,0($t4)
-	lh $t3,0($t4)
+	lh $t3,oneh
 	lhu $t3,0($t4)
 	lui $t3,100
 	lw $t3,0($t4)
@@ -76,8 +85,8 @@ lab1:	jal lab2
 	multu $t2,$t3
 	mfhi $t0
 	mflo $t0
-	lwc1  $f0, one
-	lwc1 $f2, two
+	lwc1  $f0, onef
+	lwc1 $f2, twof
 	add.s $f4,$f0,$f2
 	div.s $f4,$f0,$f2
 	mul.s $f4,$f0,$f2
@@ -93,7 +102,32 @@ lab1:	jal lab2
 	add $t0,$t0,10
 jump:	bc1t jump2
 	add $t0,$t0,10
-jump2:	j out
+jump2:	li $v0,5
+	syscall #read int
+	move $a0,$v0
+	li $v0,1
+	syscall#print int
+	li $v0,6
+	syscall#read float
+	mov.s $f12,$f0
+	li $v0,2
+	syscall#print float
+	li $v0,7
+	syscall#read double
+	mov.d $f12,$f0
+	li $v0,3
+	syscall#read double
+	li $a1,1000
+	la $a0,yolo
+	li $v0,8
+	syscall#read string
+	li $v0,4
+	syscall#print string
+	li $v0, 9
+	li $a0, 16
+	syscall
+	j out
+
 
 out:	li   $v0, 10          # system call for exit
 	syscall

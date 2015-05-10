@@ -19,8 +19,7 @@ public class InfixToPostfix {
 				StringBuffer sb = new StringBuffer();
 				sb.append(currChar);
 				while ((i + 1 < in.length())
-						&& ((Character.isDigit(in.charAt(i+1))) || 
-								(in.charAt(i + 1) == '%'))) {
+						&& ((Character.isDigit(in.charAt(i+1))))) {
 					sb.append(in.charAt(++i));
 				}
 				sb.append('|');
@@ -66,7 +65,7 @@ public class InfixToPostfix {
 	}
 
 	private static boolean isOperator(char ch) {
-		return ch=='+' || ch=='-' || ch=='*' || ch=='/' || ch=='(' || ch == ')';
+		return ch=='+' || ch=='-' || ch=='*' || ch=='/' || ch=='(' || ch == ')' || ch == '%';
 	}
 
 	private static int precedence(char op) throws InvalidCharacterExcpection {
@@ -76,6 +75,7 @@ public class InfixToPostfix {
 			return 1;
 		case '*':
 		case '/':
+		case '%':
 			return 2;
 		case '(':
 		case ')':

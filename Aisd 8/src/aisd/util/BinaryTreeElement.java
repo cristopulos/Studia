@@ -1,5 +1,7 @@
 package aisd.util;
 
+import aisd4.queue.Kolejka;
+
 @SuppressWarnings("rawtypes")
 public class BinaryTreeElement <T>{
 
@@ -64,6 +66,7 @@ public class BinaryTreeElement <T>{
 			case '-': return leftSon.calculate()-rightSon.calculate();
 			case '*' : return leftSon.calculate()*rightSon.calculate();
 			case '/' : return leftSon.calculate()/rightSon.calculate();
+			case '%' : return leftSon.calculate()%rightSon.calculate();
 			default : throw new InvalidCharacterExcpection(null);
 			}
 		}
@@ -97,7 +100,22 @@ public class BinaryTreeElement <T>{
 			throw new InvalidCharacterExcpection(null);
 	}
 	
-	
+	public String bfs()
+	{
+		StringBuffer sb = new StringBuffer();
+		Kolejka<BinaryTreeElement> queue = new Kolejka<BinaryTreeElement>();
+		queue.insert(this);
+		while(!queue.isEmpty())
+		{
+			BinaryTreeElement el = queue.remove();
+			sb.append(String.format("%s,",el.value.toString()));
+			if(el.leftSon!=null)
+				queue.insert(el.leftSon);
+			if(el.rightSon!=null)
+				queue.insert(el.rightSon);
+		}
+		return sb.toString();
+	}
 	
 	
 }
