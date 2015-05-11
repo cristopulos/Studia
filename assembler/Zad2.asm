@@ -152,7 +152,7 @@ brn3:
  	bnez $t0,exception	# jezeli wczytany znak nie jest cyfra wyrzuc komunikat
 	move $s4,$t2 		# je¿eli pierszy znak byl cyfra wczytaj ja do rejestru przechowujacego wartosc dzielnej
 	
-#----Wlasciwa petla dzialaca----#
+#----Wlasciwa petla dzielaca----#
 next:	addi $s0,$s0,1 		# zmiana adresu na nastepny znak do pobrania
 	bnez $s5,brn		# jezeli rozpoczelo sie juz dzielnie nie ma potrzeby dalej sprawdzac czy liczba reprez. dzielna jest wieksza od dzielnika
 	blt  $s4,$a1,cnt 	# jezeli wartosc dzielnej jest >= od dzielnika przystap do dzielenia
@@ -198,3 +198,53 @@ exception:
 	li $v0, 4
 	syscall			# wypisanie odpowiedniego komunikatu o bledzie
 	j out			# zkonczenie programu
+
+#----------f-cja odejmujaca------------#
+#------$a0-odjemna, $a1-odjemnik, $a2-ilosc cyfr odjemnej, $a3-ilosc cyfr odjemnika, $v0-roznica(wskaznik na to samo miejsce w pamieci co odjemna), $v1-ilosc cyfr roznicy----------#
+substract:
+	addi $sp,$sp,-32	# odpowiednie przesuniecie wskaznika konca stosu
+	sw $s0,0($sp)		# |
+	sw $s1,4($sp)		# |
+	sw $s2,8($sp)		# |
+	sw $s3,12($sp)		# |
+	sw $t0,16($sp)		# |
+	sw $t1,20($sp)		# |
+	sw $t2,24($sp)		# |
+	sw $t3,28($sp)		# |
+	
+	move $s0, $a2		# $s0 - ilosc cyfr odjemnej
+	move $s1, $a3 		# $s1 - ilosc cyfr odjemnika
+	move $s2, $a0		# $s2 - wskaznik na poczatek pamieci przeznaczonej na odjemna
+	
+	add $a0,$s0,$a0		# |
+	subi $a0,$a0,1		# przesuniecie wskaznika na koniec ciagu cyfr odjemnej
+	
+	add $a1,$s1,$a1		# |
+	subi $a1,$a1,1		# przesuniecie wskaznika na koniec ciagu cyfr odjemnika
+	
+	blez $s0, odjOut	# jezeli odjemna nie ma juz cyfr
+	blez $s1, odjOut	# jezeli odjemnik nie ma juz cyfr
+	
+	
+	
+	
+	
+	
+odjOut:
+	li $t0,0		# licznik zer odjemnej
+	move $t1,$s2			
+odjBrn:	lb $s3, 0($t1)		# ladujemy pierwsza cyfre odjemnej
+	addi $t1,$t1,1		# przesuwany wskazniik w prawo 
+	subi $s3,$s3,48		# zamieniamy znak na cyfre
+	bnez $s3,odjRemoveZero	# jezeli pierwsza cyfra odjemnej nie jest zerem, wszystko jest ok
+	subi $s0,$s0,1		# zmniejszamy ilosc cyfr odjemnej
+	addi $t0,$t0,1		# zwiekszamy ilosc zer
+	j odjBrn		
+	
+	
+	
+	
+odjRemoveZero:
+	add $t2,$s2,$t0		# $t2 wskaznik na pocztek pola pamieci odjemnej przesuniety o ilosc zer na poczatku
+	move $t1, $s2		# $t1 wskaznik na pocztek pola pamieci odjemnej
+	 
