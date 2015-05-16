@@ -33,6 +33,8 @@ public class Main {
 			System.out.printf(sb.toString(), word, temp);
 		}
 		
+		rBTree.bFS(wordList.get(1));
+		
 	}
 
 }
