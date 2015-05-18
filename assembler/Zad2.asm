@@ -5,7 +5,9 @@ exc:	.asciiz "dzielna i dzielnik moga skladac sie tylko z cyfr od 0 do 9"
 exc2:	.asciiz "dzielnik nie moze byc zerem"
 result: .asciiz "wynik to : "
 result2:.asciiz "\nreszta wynosi : "
-
+	.globl division
+	.globl addition
+	.globl dopDo4
 	.text
 #-----------------------MAIN------------------------------#
 	
@@ -361,19 +363,22 @@ copyOut:
 # $a2 - ilosc cyfr w pierwszym skladniku
 # $v0 - adres na sume (taki sam jak $a1)
 # $v1 - ilosc cyfr sumy
+# $t8 - ilosc przeniesien podczas dodawania
 addition:
-	add $sp,$sp,-24
+	add $sp,$sp,-28
 	sw $ra,0($sp)
 	sw $s0,4($sp)
 	sw $s1,8($sp)
 	sw $s2,12($sp)
 	sw $t0,16($sp)
 	sw $t1,20($sp)
+	sw $t2,24($sp)
 	
 	move $s0,$a0		# $s0 - wykladnik potegi
 	move $s1,$a1		# $s1 - wskaznik na pamiec ze skladnikiem
 	move $s2,$a2		# $s2 - ilosc cyfr w skladniku w pamieci
 	addi $t1,$s0,1
+	li $t8,0		# $t8 - ilosc przeniesien ktora wystapila podczas dodawania
 	
 	ble $t1,$s2, addCnt
 	sub $t0,$t1,$s2
@@ -390,9 +395,11 @@ addLoop:
 	lb $t1,0($t0)		# wczytanie znaku z tego pola
 	subi $t1,$t1,47		# zamiana na cyfre i dodanie jedynki
 	bne $t1,10, addOut	# jezeli nie nastapilo przepelnienie konczymy f-cje
-	bne $s0,$s2, addCnt2	# jezeli przepelnienie nie nastapilo na najbardziej znaczacej cyfrze dodajemy dalej
+	addi $t8,$t8,1		# jezeli nastapilo przeniesienie dodajemy jeden do licznika przeniesien
 	li $t1,48
 	sb $t1,0($t0)		# zapisujemy zero na miejscy wczytanej cyfry
+	sub $t2,$s1,$t0
+	bnez $t2 addCnt2	# jezeli przepelnienie nie nastapilo na najbardziej znaczacej cyfrze dodajemy dalej
 	li $a2,1
 	move $a0,$s1
 	move $a1,$s2
@@ -414,7 +421,8 @@ addOut:
 	lw $s2,12($sp)
 	lw $t0,16($sp)
 	lw $t1,20($sp)
-	add $sp,$sp,24
+	lw $t2,24($sp)
+	add $sp,$sp,28
 	jr $ra
 #-----------f-cja przesuwajaca---------#
 # $a0 - adres na elementy do przesuniecia
