@@ -1,8 +1,10 @@
+# Krzysztof Heldt 220883
+# grupa wtorek 11:15
 	.data
 dziel1: .asciiz "\npodaj wartosc dzielnej : "
-dziel2:	.asciiz "podaj wartosc dzielnika : "
-exc:	.asciiz "dzielna i dzielnik moga skladac sie tylko z cyfr od 0 do 9"
-exc2:	.asciiz "dzielnik nie moze byc zerem"
+dziel2:	.asciiz "\npodaj wartosc dzielnika : "
+exc:	.asciiz "\ndzielna i dzielnik moga skladac sie tylko z cyfr od 0 do 9"
+exc2:	.asciiz "\ndzielnik nie moze byc zerem"
 result: .asciiz "wynik to : "
 result2:.asciiz "\nreszta wynosi : "
 	.globl division
@@ -58,19 +60,15 @@ mainCnt4:
 	li $v0,11
 	syscall
 mainCnt5:
-	bnez $s3 mainCnt6
+	bnez $s3 mainCnt6	# jezeli dzilena jest dodatnia nie rob nic dodatkowego
 	lb $t0,0($t7)
-	beq $t0,48,mainCnt6
+	beq $t0,48,mainCnt6	# jezeli reszta wynosi zero nie rob nic
 	li $a0,0
-	move $a1,$t6
+	move $a1,$t6		# przesun wwrtosci do odpowiednich rejestrow
 	move $a2,$t9
 	jal addition		# je¿eli dzielna byla ujemna dodaj do wyniku 1
 	move $a0,$s4
-	move $a1,$s5
-	jal copy
-	move $t0,$v0
-	move $a0,$v0
-	move $a1,$t7
+	move $a1,$t7		# przesun wartosci do odpowiednich rejestrow
 	move $a2,$s5
 	move $a3,$t8
 	li $t9,0
@@ -87,7 +85,7 @@ mainCnt6:
 	move $a0, $t7
 	li $v0, 4
 	syscall 		# wypisanie reszty
-	j exit
+	j exit			# zakonczenie programu
 		
 exit:	li $v0, 10
 	syscall
@@ -116,7 +114,7 @@ dopDo4:
 	sub $t0,$t0,$t1
 	add $v0,$a0,$t0		# dopelnienie do nast. wielokrotnosci 4
 	j dopOut
-return:	move $v0,$a0
+return:	move $v0,$a0		# jezeli reszta wynosila zero nalezy tylko przesunac wartosc podana na wyjscie
 dopOut:	lw $t0,0($sp)		# |
 	lw $t1,4($sp)		# wczytanie wczesniej zapisanych danych
 	addi $sp,$sp,8
@@ -139,7 +137,7 @@ division:
 	sw $t2,12($sp)
 	sw $t3,16($sp)
 	sw $s0,20($sp)
-	sw $s1,24($sp)
+	sw $s1,24($sp)		# zapisanie wartosci aby nie utracic danych
 	sw $s2,28($sp)
 	sw $s3,32($sp)
 	sw $s4,36($sp)
@@ -151,6 +149,7 @@ division:
 	move $s5,$a1		# $s5 - ilosc cyfr dzielnej
 	move $s6,$a2		# $s6 - wskaznik na pamiec z dzielnikiem
 	move $s7,$a3		# $s7 - ilosc cyfr dzielnika
+	li $t9,0		# zerowanie licznika przesuniecia
 	
 	addi $sp,$sp,-4
 	sw $a0,0($sp)		# zapisanie wartosci $a0
@@ -164,7 +163,7 @@ division:
 	
 	move $a0,$a3
 	addi $a0,$a0,1
-	jal dopDo4
+	jal dopDo4		# dopelnienie ilosci znakow dzielnika +1 dla pozniejszej mozliwosci dodania czegos
 	move $a0,$v0
 	li $v0,9
 	syscall			# alokacja pamieci na reszte
