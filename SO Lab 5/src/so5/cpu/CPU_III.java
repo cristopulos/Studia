@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import so5.exceptions.ProbNoFreeCPUsException;
 import so5.util.Counter;
 import so5.util.Process;
 
@@ -12,7 +11,7 @@ public class CPU_III extends CPU_II {
 
 
 	@Override
-	public void generateProcesses() throws ProbNoFreeCPUsException {
+	public void generateProcesses(){
 		super.generateProcesses();
 		if(workLoad<minLoad)
 		{
@@ -38,6 +37,7 @@ public class CPU_III extends CPU_II {
 			result.add(p);
 			Counter.reportTransfer();
 			it.remove();
+			addProcess(p);
 			addedWork += p.getResourcesNeeded();
 		}
 		return result;

@@ -7,7 +7,6 @@ import so5.cpu.CPU;
 import so5.cpu.CPU_I;
 import so5.cpu.CPU_II;
 import so5.cpu.CPU_III;
-import so5.exceptions.ProbNoFreeCPUsException;
 import so5.util.Counter;
 
 public class Simiulation {
@@ -36,7 +35,7 @@ public class Simiulation {
 		avgLoad = new double[3];
 	}
 	
-	public void runSimulation() throws ProbNoFreeCPUsException
+	public void runSimulation()
 	{
 		runSim(0,setUp1stSim());
 		runSim(1, setUp2ndSim());
@@ -76,7 +75,7 @@ public class Simiulation {
 	
 
 
-	private void runSim (int iterCount, List<CPU> cpuList) throws ProbNoFreeCPUsException
+	private void runSim (int iterCount, List<CPU> cpuList)
 	{
 		
 		CPU.setcPUList(cpuList);

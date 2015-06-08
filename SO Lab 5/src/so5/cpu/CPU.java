@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import so5.exceptions.ProbNoFreeCPUsException;
 import so5.util.Counter;
 import so5.util.Process;
 
@@ -29,7 +28,7 @@ public abstract class CPU {
 		ongoingProcesses = new ArrayList<Process>();
 	}
 	
-	public static void nextTimeunit() throws ProbNoFreeCPUsException
+	public static void nextTimeunit()
 	{
 		for(CPU c: cPUList)
 		{
@@ -41,7 +40,7 @@ public abstract class CPU {
 		}
 	}
 
-	public void generateProcesses() throws ProbNoFreeCPUsException {
+	public void generateProcesses() {
 		if (rand.nextFloat() > 0.2f) {
 			int quant = rand.nextInt(63) + 1;
 			quant = 6 - log2(quant);
